@@ -100,4 +100,74 @@ class Wordpress_Plugin_Admin {
 
 	}
 
+	public function register_custom_post_type() {
+		
+		$labels = array(
+			'name'               => _x( 'Books', 'post type general name', 'wordpress-plugin' ),
+			'singular_name'      => _x( 'Book', 'post type singular name', 'wordpress-plugin' ),
+			'menu_name'          => _x( 'Books', 'admin menu', 'wordpress-plugin' ),
+			'name_admin_bar'     => _x( 'Book', 'add new on admin bar', 'wordpress-plugin' ),
+			'add_new'            => _x( 'Add New', 'book', 'wordpress-plugin' ),
+			'add_new_item'       => __( 'Add New Book', 'wordpress-plugin' ),
+			'new_item'           => __( 'New Book', 'wordpress-plugin' ),
+			'edit_item'          => __( 'Edit Book', 'wordpress-plugin' ),
+			'view_item'          => __( 'View Book', 'wordpress-plugin' ),
+			'all_items'          => __( 'All Books', 'wordpress-plugin' ),
+			'search_items'       => __( 'Search Books', 'wordpress-plugin' ),
+			'parent_item_colon'  => __( 'Parent Books:', 'wordpress-plugin' ),
+			'not_found'          => __( 'No books found.', 'wordpress-plugin' ),
+			'not_found_in_trash' => __( 'No books found in Trash.', 'wordpress-plugin' )
+		);
+
+		$args = array(
+			'labels'             => $labels,
+			'description'        => __( 'Description.', 'wordpress-plugin' ),
+			'public'             => true,
+			'publicly_queryable' => true,
+			'show_ui'            => true,
+			'show_in_menu'       => true,
+			'query_var'          => true,
+			'rewrite'            => array( 'slug' => 'book' ),
+			'capabilities' => array(
+					'edit_post'          => 'activate_plugins',
+					'read_post'          => 'activate_plugins',
+					'delete_post'        => 'activate_plugins',
+					'edit_posts'         => 'activate_plugins',
+					'edit_others_posts'  => 'activate_plugins',
+					'delete_posts'       => 'activate_plugins',
+					'publish_posts'      => 'activate_plugins',
+					'read_private_posts' => 'activate_plugins'
+			),
+			'has_archive'        => true,
+			'hierarchical'       => false,
+			'menu_position'      => null,
+			'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' )
+		);
+
+		register_post_type( 'book', $args );
+	}
+
+	public function create_custom_taxonomy() {
+		register_taxonomy(
+			'book_category',
+			'book',
+			array(
+				'label' => __( 'Book Category' ),
+				'rewrite' => array( 'slug' => 'book-category' ),
+				'hierarchical' => true,
+				'capabilities' => array( 'activate_plugins' )
+			)
+		);
+
+		$this->create_default_taxonomy_term();
+	}
+
+	private function create_default_taxonomy_term() {
+		$term_exists = term_exists( 'Non Fiction', 'book_category' );
+
+		if ( !$term_exists ) {
+			wp_insert_term( 'Non Fiction', 'book_category' );
+		}
+	}
+
 }

@@ -100,4 +100,22 @@ class Wordpress_Plugin_Public {
 
 	}
 
+	public function shortcode( $atts, $content ) {
+		return '<form>
+			<p>
+				<label for="wpp-name">Name</label>
+				<input type="text" name="name" class="wpp-input-name" id="name">
+			</p>
+			<p>
+				<label for="wpp-email">Email</label>
+				<input type="email" name="email" class="wpp-input-email" id="email">
+			</p>
+			<button type="submit" class="wpp-button-submit">Submit</button>
+		</form>';
+	}
+
+	function register_shortcode() {
+		add_shortcode( 'wpp-form', array( $this, 'shortcode' ) );
+	}
+
 }
