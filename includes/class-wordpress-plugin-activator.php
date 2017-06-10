@@ -39,6 +39,7 @@ class Wordpress_Plugin_Activator {
 			id mediumint(9) NOT NULL AUTO_INCREMENT,
 			name varchar(255) NOT NULL,
 			email varchar(255) NOT NULL,
+			created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			UNIQUE KEY id (id)
 		) $charset_collate;";
 

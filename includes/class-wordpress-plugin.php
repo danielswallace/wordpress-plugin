@@ -155,6 +155,7 @@ class Wordpress_Plugin {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'init', $plugin_admin, 'register_custom_post_type' );
 		$this->loader->add_action( 'init', $plugin_admin, 'create_custom_taxonomy' );
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_options_page' );
 
 	}
 

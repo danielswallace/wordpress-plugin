@@ -172,4 +172,19 @@ class Wordpress_Plugin_Admin {
 		}
 	}
 
+	public function add_options_page() {
+	
+		$this->plugin_screen_hook_suffix = add_options_page(
+			__( 'Response List', 'wordpress-plugin' ),
+			__( 'Response List', 'wordpress-plugin' ),
+			'manage_options',
+			$this->plugin_name,
+			array( $this, 'display_options_page' )
+		);
+	}
+
+	public function display_options_page() {
+		include_once 'partials/wordpress-plugin-admin-display.php';
+	}
+
 }
